@@ -141,6 +141,9 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
                         <ul class="kt-menu__nav ">
                             <li class="kt-menu__item  kt-menu__item--active" aria-haspopup="true"><a href="{{route('home')}}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-protection"></i><span class="kt-menu__link-text"style="color:black">Dashboard</span></a></li>
+
+                            <li class="kt-menu__item  kt-menu__item--active" aria-haspopup="true"><a href="{{route('customer.index')}}" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-users-1"></i><span class="kt-menu__link-text"style="color:black">Customer</span></a></li>
+
                         </ul>
                     </div>
 
@@ -203,24 +206,78 @@ License: You must have a valid license purchased only from themeforest(the above
                                 @if(!(Auth::user()->role == 3))
                                 <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('user.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">User</span></a></li>
                                 @endif
+                                @if(Auth::user()->role == 1)
+                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('location.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Location</span></a></li>
+                                @endif
 
                                 @if(Auth::user()->role == 1)
 
-                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('category.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Category</span></a></li>
+                                <li class="kt-menu__item kt-menu__item--active kt-menu__item--submenu kt-menu__item--rel kt-menu__item--open-dropdown" data-ktmenu-submenu-toggle="click" aria-haspopup="true"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Masters</span><i class="kt-menu__hor-arrow la la-angle-down"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
 
-                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('product.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Product</span></a></li>
+                                    <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
 
-                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('discount.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Discount</span></a></li>
+                                        <ul class="kt-menu__subnav">
 
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('category.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Category</span></a></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('gst.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">GST</span></a></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('hsn.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">HSN Code</span></a></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('group.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Group</span></a></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('unit.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Unit</span></a></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('product.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Product</span></a></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('discount.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Discount</span></a></li>
+
+                                             <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('leavetype.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Leave Type</span></a></li>
+
+                                                <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('leavepolicy.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Leave Policy</span></a></li>
+
+                                        </ul>
+                                    </div>
+                                </li>
+                                
                                 @endif
                                 
                                 <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('stock.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Stock</span></a></li>
 
                                 <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('inventory')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Inventory</span></a></li>
                                 
-                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('customer.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Customer</span></a></li>
-                                
                                 <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('salesorder.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Sales Order</span></a></li>
+
+                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('holiday.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Holiday</span></a></li>
+                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('leave.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Leave</span></a></li>
+
+                                 <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('lead.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Lead</span></a></li>
+
+
+                                <li class="kt-menu__item kt-menu__item--active kt-menu__item--submenu kt-menu__item--rel kt-menu__item--open-dropdown" data-ktmenu-submenu-toggle="click" aria-haspopup="true"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Report</span><i class="kt-menu__hor-arrow la la-angle-down"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+
+                                    <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+
+                                        <ul class="kt-menu__subnav">
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('returnstock')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Dead Stock</span></a></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('replacestock')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Replace Stock</span></a></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('invereport')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Inventory Report</span></a></li>
+
+                                             <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('reportserialno')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Serial No. Report</span></a></li>
+
+                                              <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('attendance.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Attendance</span></a></li>
+
+                                              <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('regularize.index')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Regularization</span></a></li>
+
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="kt-menu__item  kt-menu__item--active " aria-haspopup="true"><a href="{{route('task.index')}}" class="kt-menu__link "><span class="kt-menu__link-text" style="color:black">Task</span></a></li>
+
                                 
                             </ul>
 

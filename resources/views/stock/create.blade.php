@@ -4,9 +4,12 @@
 
         @if(Auth::user()->role == 1)
               <div class="form-group col-lg-2">
-                     <label>Branch <span style="color : red;">*</span></label>
+                     <label>Location <span style="color : red;">*</span></label>
+                     <a style="background: white; height: 2px !important" target="_blank" href="{{route('location.create')}}" title="Add" class="btn btn-sm btn-clean btn-icon btn-icon-md">
+                        <i class="flaticon2-plus-1"></i>
+                    </a>
                      <select class="form-control select2" id="user_id" name="user_id" required>
-                            <option value="">Select Branch</option>
+                            <option value="">Select Location</option>
                             @foreach($user as $datas)
                             <option value="{{$datas->id}}">{{$datas->name}}</option>
                             @endforeach
@@ -16,6 +19,11 @@
 
  		<div class="form-group col-lg-2">
  			<label>Category <span style="color : red;">*</span></label>
+            @if(Auth::user()->role == 1)
+            <a style="background: white; height: 2px !important" target="_blank" href="{{route('category.create')}}" title="Add" class="btn btn-sm btn-clean btn-icon btn-icon-md">
+                <i class="flaticon2-plus-1"></i>
+            </a>
+            @endif
  			<select class="form-control select2" id="category_id" name="category_id" onchange="getproduct(this)" required>
  				<option value="">Select Category</option>
  				@foreach($category as $datas)
@@ -26,6 +34,11 @@
 
  		<div class="form-group col-lg-2">
  			<label>Product <span style="color : red;">*</span></label>
+            @if(Auth::user()->role == 1)
+            <a style="background: white; height: 2px !important" target="_blank" href="{{route('product.create')}}" title="Add" class="btn btn-sm btn-clean btn-icon btn-icon-md">
+                <i class="flaticon2-plus-1"></i>
+            </a>
+            @endif
  			<select class="form-control select2" id="product_id" name="product_id" required>
  				<option value="">Select Product</option>
  			</select>

@@ -23,6 +23,8 @@ class SoChild extends Model
     }
 
     public function stock_childs(){
-        return $this->hasMany('App\StockChild','id','id');
+        return $this->belongsTo('App\StockChild','serial_id','id');
     }
+
+
 }

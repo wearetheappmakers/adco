@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\User;
+use App\Attendance;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 
@@ -57,13 +60,41 @@ class LoginController extends Controller
 
     if(isset($check) && $check->status == 1)
     {
-
+        
     }else{
         return $this->sendFailedLoginResponseStatus($request);
     }
     
 
     if ($this->attemptLogin($request)) {
+        if(Auth::user()->role == 3)
+        {
+              $data_att = Attendance::where('employee_id',$check->id)->whereDate('created_at',Carbon::today())->first();
+         
+         // dd($check->id);
+
+              // $leave = Attendance::where('employee_id',$check->id)->whereDate('date',date('Y-m-d'))->first();
+              // if(!empty($leave)){
+                  return $this->sendLoginResponse($request);
+
+              // }else
+
+            //   if(!empty($data_att)){
+            //       return $this->sendLoginResponse($request);
+            //   }
+            //   else
+            //   {
+              
+            //     $param['date'] = date('Y-m-d');
+            //     $param['time'] = date('H:i:s');
+            //     $param['employee_id'] = $check->id;
+            //     $param['branch_id'] = $check->branch_id;
+            //     $param['attendance'] = 'Present';
+
+            //     $store = Attendance::create($param);
+            // }
+        }
+     
         return $this->sendLoginResponse($request);
     }
 

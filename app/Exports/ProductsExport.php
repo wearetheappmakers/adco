@@ -16,6 +16,22 @@ class ProductsExport implements WithHeadings
             'category',
             'productname',
             'modelcode',               
+            'gst',               
+            'alias', 
+            'group_name',
+            'stock_required',
+            'price_list',
+            'locationwise_stock',
+            'serialno_stock',
+            'tcs',
+            'purchase_rate',
+            'sales_rate',
+            'tax_paid_rate',
+            'sale',
+            'purchase',
+            'gst_unit',
+            'quantity',
+            'amount',              
         ];
     }
 }

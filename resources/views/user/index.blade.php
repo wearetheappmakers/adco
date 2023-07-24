@@ -35,10 +35,13 @@
 					<thead>
 						<tr>
 							<th>#</th>
+							@if(Auth::user()->role == 1)
+							<th>Location </th>
+							@endif
 							<th>Name</th>
 							<th>Number</th>
 							<th>Email</th>
-							<th>Role</th>
+							
 							<th>Status</th>
 							<th>Action</th>
 						</tr>
@@ -81,6 +84,13 @@
 					searchable: true,
 					data: "id"
 				},
+				@if(Auth::user()->role == 1)
+				{
+					orderable: true,
+					searchable: true,
+					data: "branch_id",
+				},
+				@endif
 				{
 					orderable: true,
 					searchable: true,
@@ -98,12 +108,7 @@
 					data: 'email',
 
 				},
-				{
-					orderable: false,
-					searchable: false,
-					data: 'role',
-
-				},
+				
 				{
 					orderable: false,
 					searchable: false,

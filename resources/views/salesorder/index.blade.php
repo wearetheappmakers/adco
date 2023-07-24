@@ -17,7 +17,7 @@
 						
 						<a href="{{route('salesorder.create')}}" class="btn btn-brand btn-elevate btn-icon-sm">
 							<i class="la la-plus"></i>
-							Add SO
+							Add Sales Order
 						</a>
 					</form>
 
@@ -32,10 +32,13 @@
 				<thead>
 					<tr>
 						<th width="5%">#</th>
+						@if(Auth::user()->role == 1)
 						<th>Branch</th>
+						@endif
 						<th>Customer</th>
 						<th>Remarks</th>
 						<th>Status</th>
+						<th>BSR Status</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -50,6 +53,51 @@
 		))
 	</div>
 </div>	
+   <div class="modal fade" id="completed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Serial No</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="completedform" id="completedform" method="POST" action="{{route('bsr.completed')}}">
+                <div class="modal-body">
+                    @csrf
+                  
+
+                    <div class="row">
+
+                        <div class="form-group col-lg-4">
+                            <label>Serial No </label>
+                            <input type="text" class="form-control completed_serial_no" id="completed_serial_no"  name="completed_serial_no" >
+                            <input type="hidden" class="form-control" id="completed_id"  name="id" >
+                            <input type="hidden" class="form-control" id="status_approve"  name="status" >
+                        </div>
+
+                        
+                    </div>
+
+
+                
+                </div>
+
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary submit" id="submit">Save changes</button>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+</div>
 @stop
 @push('scripts')
 <script>
@@ -77,15 +125,17 @@
 				searchable: true,
 				data: "id"
 			},
+			@if(Auth::user()->role == 1)
 			{
 				orderable: true,
 				searchable: true,
 				data: "users.name",
 			},
+			@endif
 			{
 				orderable: true,
 				searchable: true,
-				data: "customers.name",
+				data: "customer_id",
 			},
 			{
 				orderable: true,
@@ -96,6 +146,11 @@
 				orderable: true,
 				searchable: true,
 				data: "status",
+			},
+			{
+				orderable: true,
+				searchable: true,
+				data: "bsr_status",
 			},
 			{
 				orderable: false,
@@ -141,6 +196,59 @@
 			}
 		});
 	}
+
+	   function bsrstatus($this,id)
+    {
+        var status = $($this).val();
+       
+       
+
+        if(status == 2)
+        {
+
+        
+
+            $('#completed').modal('show');
+            $('#completed_id').val(id);
+            $('#status_approve').val(status);
+
+
+
+
+        }
+        
+        else
+        {
+        $.ajax({
+
+            type: 'POST',
+            url: '{{ route("bsr.status") }}',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                id: id,
+                status: status,
+            },
+            dataType: 'json',
+
+            success: function(data) {
+                if (data.status == 'success') {
+                    toastr["success"]("Status Changed Successfully", "Success");
+                    location.reload();
+                } 
+                else if (data.status == 'duplicate_serial') {
+                    toastr["warning"]("Duplicate Serial", "Warning");
+                    location.reload();
+                } 
+
+                else 
+                {
+                    toastr["error"]("Something Went Wrong!", "Error");
+                    location.reload();
+                }
+            }
+        });
+    }
+}
 
 </script>
 @endpush

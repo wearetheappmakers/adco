@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
+use App\GST;
+use App\Unit;
 use App\Exports\ProductsExport;
 use App\Imports\ProductsImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -47,6 +49,8 @@ class ProductController extends Controller
         $data['module'] = $this->viewName;
         $data['resourcePath'] = $this->view;
         $data['category'] = Category::get();
+        $data['gst'] = GST::get();
+        $data['unit'] = Unit::get();
         return view('general.add_form')->with($data);
     }
 
@@ -78,6 +82,8 @@ class ProductController extends Controller
         $data['module'] = $this->viewName;
         $data['resourcePath'] = $this->view;
         $data['category'] = Category::get();
+        $data['gst'] = GST::get();
+        $data['unit'] = Unit::get();
         return view('general.edit_form')->with($data);
     }
 

@@ -3,9 +3,9 @@
  	<div class="row">
         @if(Auth::user()->role == 1)
               <div class="form-group col-lg-2">
-                     <label>Branch</label>
+                     <label>Location</label>
                      <select class="form-control select2" id="user_id" name="user_id" disabled>
-                            <option value="">Select Branch</option>
+                            <option value="">Select Location</option>
                             @foreach($user as $admin)
                             <option value="{{$admin->id}}" @if($admin->id == $data->user_id) selected @endif>{{$admin->name}}</option>
                             @endforeach

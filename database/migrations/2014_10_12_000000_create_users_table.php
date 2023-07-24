@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('showpasssword')->nullable();
             $table->integer('status')->default(1);
+            $table->integer('leave_policy_id')->nullable();
+            $table->integer('weekoff_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

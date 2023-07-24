@@ -11,4 +11,9 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
+
+
+    public function branch(){
+        return $this->belongsTo('App\User','branch_id','id');
+       }
 }

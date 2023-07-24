@@ -26,6 +26,8 @@ class CreateStockChildTable extends Migration
             $table->string('price')->nullable();
             $table->string('serial_no')->nullable();
             $table->integer('used')->default(0);
+            $table->integer('replaced')->default(0);
+            $table->integer('return_id')->default(0);
             $table->timestamps();
         });
     }

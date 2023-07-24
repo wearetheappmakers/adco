@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\WeekCron::class,
+         Commands\MonthCron::class,
     ];
 
     /**
@@ -24,6 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('WeekCron:check')->everyMinute();
+        $schedule->command('MonthCron:check')->monthly();
+        
         // $schedule->command('inspire')
         //          ->hourly();
     }

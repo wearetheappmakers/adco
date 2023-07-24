@@ -23,7 +23,12 @@ class CreateSoChildTable extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('serial_id')->nullable()->unsigned();
             $table->foreign('serial_id')->references('id')->on('stock_child')->onDelete('cascade');
+            $table->string('return_serial_id')->nullable();
             $table->string('price')->nullable();
+            $table->string('discount')->nullable();
+            $table->string('discount_amount')->nullable();
+            $table->string('date_of_sale')->nullable();
+            $table->string('amount')->nullable();
             $table->timestamps();
         });
     }

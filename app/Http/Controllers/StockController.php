@@ -64,6 +64,44 @@ class StockController extends Controller
 
     public function store(Request $request)
     {
+
+         
+            // $arr = [];
+            // foreach ($request->serial_no as $keys => $values)
+            // {
+            //     $child = StockChild::where('serial_no',$values)->value('serial_no');
+            //     // dd($child);
+            //     if($child)
+            //     {
+            //          return response()->json(['status' => 'duplicate_serial']);
+            //     }
+            //     array_push($arr, $child);
+            // }
+            $arr = [];
+            foreach ($request->serial_no as $keys => $values)
+            {
+                $child_data = StockChild::where('serial_no',$values)->value('serial_no');
+                if(isset($child_data))
+                {
+                    return response()->json(['status' => 'duplicate_serial']);
+                }
+                $check = in_array($values,$arr);
+                if($check)
+                {
+                    return response()->json(['status' => 'duplicate_serial']);
+                }
+                array_push($arr,$values);
+            }
+            // $array_temp = [];
+            // foreach($arr as $a)
+            // {
+            //     if(in_array($a, $array_temp))
+            //     {
+            //         // dd($a);
+            //         return response()->json(['status' => 'duplicate_serial']);
+            //     }
+            //     array_push($array_temp, $a);
+            // }
         $stock = new Stock();
         if(Auth::user()->role == 1){
             $stock->user_id = $request->user_id;
@@ -78,12 +116,15 @@ class StockController extends Controller
         $stock->no_of_product = $request->no_of_product;
         $stock->save();
 
+        
+
         if(isset($request->serial_no)) 
         {
             foreach ($request->serial_no as $key => $value) 
             {
                 if ($value != '') 
                 {
+
                     $srno = new StockChild();
                     $srno->stock_id = $stock->id;
                     $srno->user_id = $stock->user_id;
@@ -91,6 +132,13 @@ class StockController extends Controller
                     $srno->product_id = $stock->product_id;
                     $srno->price = $stock->price;
                     $srno->serial_no = $value;
+                    // $image = \QrCode::format('png')
+                    // ->merge('img/t.jpg', 0.1, true)
+                    // ->size(200)->errorCorrection('H')
+                    // ->generate($value);
+                    // $output_file = '/img/qr-code/img-' . time() . '.png';
+                    // Storage::disk('local')->put($output_file, $image);
+                    // dd($output_file);
                     $srno->save();
                 }
             }
@@ -127,6 +175,33 @@ class StockController extends Controller
     
     public function update(Request $request, $id)
     {
+         // $arr = [];
+         //    foreach ($request->serial_no as $keys => $values)
+         //    {
+         //        $child = StockChild::where('serial_no',$values)->value('serial_no');
+         //        // dd($child);
+         //        if($child)
+         //        {
+         //             return response()->json(['status' => 'duplicate_serial']);
+         //        }
+         //        array_push($arr, $child);
+         //    }
+
+             $arr = [];
+            foreach ($request->serial_no as $keys => $values)
+            {
+                $child_data = StockChild::where('serial_no',$values)->where('stock_id','!=',$id)->value('serial_no');
+                if(isset($child_data))
+                {
+                    return response()->json(['status' => 'duplicate_serial']);
+                }
+                $check = in_array($values,$arr);
+                if($check)
+                {
+                    return response()->json(['status' => 'duplicate_serial']);
+                }
+                array_push($arr,$values);
+            }
         $data = $request->all();
         unset($data['_method'],$data['_token'],$data['user_id'],$data['category_id'],$data['product_id'],$data['serial_no'],$data['no_of_product'],$data['child_id'],$data['price']);
         $data = Product::where('id', $id)->update($data);

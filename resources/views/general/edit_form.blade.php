@@ -12,7 +12,11 @@
     </div>
     <form class="kt-form" class="addform" id="addform">
       @csrf
+      @if($resourcePath == 'regularize')
+      @method('POST')
+      @else
       @method('PUT')
+      @endif
       <?php
       $index = route($resourcePath.'.index');
       $update = route($resourcePath.'.update',$data->id);
@@ -37,6 +41,13 @@
   $(document).ready(function(){
     $("#submit").on("click",function(e){
       e.preventDefault();
+
+      @if($resourcePath === "task")
+      for ( instance in CKEDITOR.instances ) {
+        CKEDITOR.instances.description.updateElement();        
+      }
+      @endif
+      
       if($("#addform").valid()){
         $.ajax({
           type:"POST",
@@ -56,11 +67,20 @@
             toastr["error"]("Duplicate Serial Number", "Error");
             // location.reload();
             } 
+             else if(data.status==='duplicate_hsn'){
+            toastr["error"]("Duplicate Hsn code", "Error");
+            // location.reload();
+          }
+           else if(data.status==='duplicate'){
+            toastr["error"]("Duplicate Email", "Error");
+            // location.reload();
+          }
           }
         });
       }else{
         e.preventDefault();
       }
+      
     });
   });
 </script>
